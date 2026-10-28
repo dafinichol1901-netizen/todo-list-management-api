@@ -69,4 +69,13 @@ describe('API smoke checks', () => {
     expect(response.status).toBe(503);
     expect(response.body.error.code).toBe('API_KEY_NOT_CONFIGURED');
   });
+
+  test('Swagger UI assets redirect to the pinned distribution files', async () => {
+    const response = await request(app).get('/api-docs/swagger-ui-bundle.js');
+
+    expect(response.status).toBe(302);
+    expect(response.headers.location).toMatch(
+      /^https:\/\/cdn\.jsdelivr\.net\/npm\/swagger-ui-dist@\d+\.\d+\.\d+\/swagger-ui-bundle\.js$/,
+    );
+  });
 });

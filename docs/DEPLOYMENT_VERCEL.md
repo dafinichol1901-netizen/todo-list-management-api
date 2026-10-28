@@ -10,7 +10,7 @@ Proyek mengekspor aplikasi Express dari `src/index.js`, lokasi yang dikenali Ver
 2. Repository source tersedia di [GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api). `.env` dan secret tidak boleh dimasukkan ke repository.
 3. Import repository tersebut ke Vercel.
 
-Vercel mendeteksi Express dari export aplikasi di `src/index.js`. File `vercel.json` menyertakan aset `swagger-ui-dist` ke dalam function agar file JavaScript dan CSS Swagger tersedia pada deployment.
+Vercel mendeteksi Express dari export aplikasi di `src/index.js`. Karena aset statis `swagger-ui-dist` tidak tersedia dari function pada deployment, JavaScript dan CSS Swagger UI diarahkan ke jsDelivr dengan versi paket yang dipatok.
 
 ## Environment variables
 

@@ -6,22 +6,22 @@ Panduan ini membantu Dafi mempelajari 12 artikel referensi secara bertahap dan m
 
 ## Progres belajar
 
-Status berikut adalah progres belajar pribadi yang terakhir dicatat, bukan status implementasi fitur. Perbarui setelah Dafi selesai membaca dan memahami artikel terkait.
+**Status:** Dafi sudah mempelajari seluruh 12 artikel referensi.
 
 - [x] Artikel 1 — sudah dirangkum Dafi.
-- [ ] Artikel 2 — sedang dipelajari.
-- [ ] Artikel 3
-- [ ] Artikel 4
-- [ ] Artikel 5
-- [ ] Artikel 6
-- [ ] Artikel 7
-- [ ] Artikel 8
-- [ ] Artikel 9
-- [ ] Artikel 10
-- [ ] Artikel 11
-- [ ] Artikel 12
+- [x] Artikel 2 — Middleware dan `.env` di Express.js.
+- [x] Artikel 3 — Error handling dan HTTP status code.
+- [x] Artikel 4 — Autentikasi JWT dan role-based access.
+- [x] Artikel 5 — Proteksi endpoint dengan API Key.
+- [x] Artikel 6 — Validasi input, filtering, search, sorting, dan pagination.
+- [x] Artikel 7 — Automated testing dengan Jest dan Supertest.
+- [x] Artikel 8 — Pengujian dan dokumentasi API dengan Postman dan Swagger.
+- [x] Artikel 9 — Struktur project Node.js siap produksi.
+- [x] Artikel 10 — Menulis README.md yang profesional.
+- [x] Artikel 11 — Push project Node.js ke GitHub.
+- [x] Artikel 12 — Deployment backend Node.js ke Vercel.
 
-Ubah tanda `[ ]` menjadi `[x]` setelah selesai membaca dan bisa menjelaskan kembali inti materinya dengan kata-kata sendiri.
+Semua artikel referensi telah dipelajari; catatan materi dan penerapannya pada proyek tersedia di bawah.
 
 ---
 

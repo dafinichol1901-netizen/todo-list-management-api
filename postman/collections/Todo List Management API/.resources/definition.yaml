@@ -1,0 +1,12 @@
+$kind: collection
+description: Koleksi manual untuk menguji seluruh endpoint. Atur apiKey dan kredensial akun melalui collection variables sebelum digunakan.
+variables:
+  baseUrl: http://localhost:3000
+  userName: Dafi User
+  userEmail: dafi@example.test
+  userPassword: ChangeThisPassword_123
+  jwt: ""
+  apiKey: replace-with-local-api-key
+  categoryId: ""
+  todoId: ""
+  userId: ""

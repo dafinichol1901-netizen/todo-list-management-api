@@ -1,0 +1,246 @@
+{
+  "info": {
+    "_postman_id": "5c3de7ea-4b45-4b51-84e3-56bc82531c69",
+    "name": "Todo List Management API",
+    "description": "Koleksi manual untuk menguji seluruh endpoint. Atur apiKey dan kredensial akun melalui collection variables sebelum digunakan.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "userName", "value": "Dafi User" },
+    { "key": "userEmail", "value": "dafi@example.test" },
+    { "key": "userPassword", "value": "ChangeThisPassword_123" },
+    { "key": "jwt", "value": "" },
+    { "key": "apiKey", "value": "replace-with-local-api-key" },
+    { "key": "categoryId", "value": "" },
+    { "key": "todoId", "value": "" },
+    { "key": "userId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Liveness",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/health" }
+        },
+        {
+          "name": "Database readiness",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/health/ready" }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const result = pm.response.json();",
+                  "if (result.data && result.data.accessToken) pm.collectionVariables.set('jwt', result.data.accessToken);",
+                  "if (result.data && result.data.user && result.data.user._id) pm.collectionVariables.set('userId', result.data.user._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{userName}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/api/v1/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const result = pm.response.json();",
+                  "if (result.data && result.data.accessToken) pm.collectionVariables.set('jwt', result.data.accessToken);",
+                  "if (result.data && result.data.user && result.data.user._id) pm.collectionVariables.set('userId', result.data.user._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Current user",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users (admin where noted)",
+      "item": [
+        {
+          "name": "List users (admin)",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/users?page=1&limit=20&sortBy=created_at&order=desc"
+          }
+        },
+        {
+          "name": "Get user by ID",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/users/{{userId}}"
+          }
+        },
+        {
+          "name": "Update own user profile",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"{{userName}} Updated\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/v1/users/{{userId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List categories",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/categories?page=1&limit=20&sortBy=name&order=asc"
+          }
+        },
+        {
+          "name": "Create category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const result = pm.response.json();",
+                  "if (result.data && result.data.category && result.data.category._id) pm.collectionVariables.set('categoryId', result.data.category._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"proyek-api\",\n  \"description\": \"Todo untuk pengembangan API\",\n  \"color\": \"#3366FF\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/v1/categories"
+          }
+        },
+        {
+          "name": "Get category by ID",
+          "request": { "method": "GET", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}" }
+        },
+        {
+          "name": "Update category",
+          "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"description\": \"Kategori proyek Todo List API\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}" }
+        },
+        {
+          "name": "Archive category (run last)",
+          "request": { "method": "DELETE", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Todos",
+      "item": [
+        {
+          "name": "List todos with filters and pagination",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "url": "{{baseUrl}}/api/v1/todos?page=1&limit=20&sortBy=created_at&order=desc&search=API&completed=false&category={{categoryId}}"
+          }
+        },
+        {
+          "name": "Create todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const result = pm.response.json();",
+                  "if (result.data && result.data.todo && result.data.todo._id) pm.collectionVariables.set('todoId', result.data.todo._id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Menyiapkan dokumentasi endpoint\",\n  \"description\": \"Mencatat request dan response API\",\n  \"priority\": \"high\",\n  \"completed\": false,\n  \"category\": \"{{categoryId}}\"\n}", "options": { "raw": { "language": "json" } } },
+            "url": "{{baseUrl}}/api/v1/todos"
+          }
+        },
+        {
+          "name": "Get todo by ID",
+          "request": { "method": "GET", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/todos/{{todoId}}" }
+        },
+        {
+          "name": "Update todo",
+          "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }], "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "body": { "mode": "raw", "raw": "{\n  \"completed\": true,\n  \"priority\": \"medium\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/v1/todos/{{todoId}}" }
+        },
+        {
+          "name": "Archive todo (run last)",
+          "request": { "method": "DELETE", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/todos/{{todoId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Activity Logs",
+      "item": [
+        {
+          "name": "List own activity logs",
+          "request": { "method": "GET", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{jwt}}", "type": "string" }] }, "url": "{{baseUrl}}/api/v1/activity-logs?page=1&limit=20&action=TODO_CREATED" }
+        }
+      ]
+    },
+    {
+      "name": "Public API (API Key)",
+      "item": [
+        {
+          "name": "Get stats",
+          "request": { "method": "GET", "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }], "url": "{{baseUrl}}/api/v1/public/stats" }
+        },
+        {
+          "name": "Get sanitized activity logs",
+          "request": { "method": "GET", "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }], "url": "{{baseUrl}}/api/v1/public/activity-logs?page=1&limit=20&action=TODO_CREATED" }
+        }
+      ]
+    }
+  ]
+}

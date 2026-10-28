@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/public/activity-logs?page=1&limit=20&action=TODO_CREATED"
+method: GET
+headers:
+  x-api-key: "{{apiKey}}"
+queryParams:
+  page: "1"
+  limit: "20"
+  action: TODO_CREATED
+order: 2000

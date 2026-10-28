@@ -1,0 +1,37 @@
+{
+  "name": "todo-list-management-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API for personal todo and category management, with JWT authentication and API-key protected public endpoints.",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node ./node_modules/nodemon/bin/nodemon.js src/server.js",
+    "start": "node src/server.js",
+    "test": "node ./node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "node ./node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node ./node_modules/jest/bin/jest.js --coverage --runInBand",
+    "seed:admin": "node scripts/createAdmin.js",
+    "seed:demo": "node scripts/seedDemo.js"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "cors": "2.8.6",
+    "dotenv": "18.0.8",
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "express-validator": "7.3.2",
+    "helmet": "8.3.0",
+    "jsonwebtoken": "9.0.2",
+    "mongoose": "9.11.2",
+    "morgan": "1.12.1",
+    "swagger-ui-express": "5.0.1"
+  },
+  "devDependencies": {
+    "jest": "30.2.0",
+    "nodemon": "3.1.10",
+    "supertest": "7.1.4"
+  }
+}

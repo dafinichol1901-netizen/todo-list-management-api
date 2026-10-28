@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/categories"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "proyek-api",
+      "description": "Todo untuk pengembangan API",
+      "color": "#3366FF"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const result = pm.response.json();
+      if (result.data && result.data.category && result.data.category._id) pm.collectionVariables.set('categoryId', result.data.category._id);
+    language: text/javascript
+order: 2000

@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/todos/{{todoId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "completed": true,
+      "priority": "medium"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt}}"
+order: 4000

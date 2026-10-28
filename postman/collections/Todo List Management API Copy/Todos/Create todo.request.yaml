@@ -1,0 +1,26 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/todos"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Menyiapkan dokumentasi endpoint",
+      "description": "Mencatat request dan response API",
+      "priority": "high",
+      "completed": false,
+      "category": "{{categoryId}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const result = pm.response.json();
+      if (result.data && result.data.todo && result.data.todo._id) pm.collectionVariables.set('todoId', result.data.todo._id);
+    language: text/javascript
+order: 2000

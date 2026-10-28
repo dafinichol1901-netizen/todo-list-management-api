@@ -1,0 +1,18 @@
+name: Todo API - Local
+values:
+  - key: baseUrl
+    value: ''
+  - key: userName
+    value: ''
+  - key: userEmail
+    value: ''
+  - key: userPassword
+    value: ''
+  - key: apiKey
+    value: ''
+  - key: userId
+    value: ''
+  - key: categoryId
+    value: ''
+  - key: todoId
+    value: ''

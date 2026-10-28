@@ -6,6 +6,8 @@ Panduan ini membantu Dafi mempelajari 12 artikel referensi secara bertahap dan m
 
 ## Progres belajar
 
+Status berikut adalah progres belajar pribadi yang terakhir dicatat, bukan status implementasi fitur. Perbarui setelah Dafi selesai membaca dan memahami artikel terkait.
+
 - [x] Artikel 1 — sudah dirangkum Dafi.
 - [ ] Artikel 2 — sedang dipelajari.
 - [ ] Artikel 3
@@ -68,7 +70,7 @@ Catatan proyek yang lebih lengkap tersedia di [TUTORIAL_02_MIDDLEWARE_DAN_ENV.md
 1. Apa yang terjadi jika middleware lupa memanggil `next()` dan tidak mengirim response?
 2. Mengapa `.env.example` boleh diunggah, sedangkan `.env` tidak?
 
-**Progres:** [ ] Sedang dipelajari.
+**Progres:** [ ] Sedang dipelajari (status terakhir yang dicatat).
 
 ---
 

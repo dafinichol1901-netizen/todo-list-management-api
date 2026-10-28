@@ -2,6 +2,8 @@
 
 Panduan ini membantu menghubungkan aplikasi lokal ke MongoDB Atlas. Jangan kirim URI, username, atau password database ke chat, screenshot, GitHub, atau file yang dibagikan.
 
+**Status:** panduan konfigurasi. Koneksi Atlas dianggap berhasil hanya setelah endpoint readiness benar-benar mengembalikan HTTP 200; dokumentasi ini sendiri bukan bukti koneksi.
+
 ## 1. Buat deployment database
 
 1. Masuk atau buat akun MongoDB Atlas.
@@ -37,4 +39,4 @@ GET http://localhost:3000/api/v1/health/ready
 
 Koneksi berhasil jika response HTTP `200` dan JSON menunjukkan `"status":"ready"`. Jika gagal, periksa kembali URI, username/password database, IP access list Atlas, dan koneksi internet. Jangan menampilkan URI di screenshot.
 
-Setelah berhasil, ambil screenshot response readiness untuk folder Drive `Pre-Production`. Pastikan alamat, status `200`, dan pesan `ready` terlihat, tetapi nilai `.env` tidak terlihat.
+Setelah berhasil, simpan screenshot response readiness di folder bukti Drive `Pre-Production`. Pastikan alamat, status `200`, dan pesan `ready` terlihat, tetapi nilai `.env` atau URI berisi kredensial tidak terlihat.

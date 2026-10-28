@@ -80,3 +80,7 @@ Pemisahan ini membuat konfigurasi, middleware, route, dan logika endpoint lebih 
 ## Kesimpulan
 
 Middleware menyusun proses request dalam langkah-langkah kecil yang dapat digunakan kembali. File `.env` menjaga konfigurasi tiap lingkungan tetap terpisah dari source code. Urutan middleware harus dirancang dengan benar, sementara rahasia tetap lokal dan tidak diunggah ke repository.
+
+## Status penerapan di proyek
+
+Pada pembaruan 28 Oktober 2026, konfigurasi environment terpusat di `src/config/env.js`; middleware umum, autentikasi, validasi, API Key, 404, dan error handler terpasang di aplikasi. Smoke test terakhir (`npm.cmd test`) lulus 7 dari 7 test. Hasil tersebut memverifikasi beberapa perilaku HTTP dasar, bukan keseluruhan skenario koneksi database atau deployment produksi.

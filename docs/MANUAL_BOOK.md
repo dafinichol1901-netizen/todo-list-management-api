@@ -8,6 +8,8 @@
 **Versi dokumen:** 1.0  
 **Tanggal:** 28 Oktober 2026
 
+**Status proyek saat pembaruan:** source sudah dipublikasikan di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api), README tampil di halaman repository, dan smoke test terakhir lulus 7 dari 7 test. Deployment Vercel belum diverifikasi. Menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive; file tautan GitHub perlu diunggah terpisah ke folder Drive yang sama.
+
 ---
 
 ## Daftar Isi
@@ -309,6 +311,8 @@ npm.cmd run test:coverage
 ```
 
 Jest menjalankan smoke test API dan Supertest mengirim request ke aplikasi Express. Sebelum mencatat hasil pada Manual Book, jalankan test pada kondisi proyek saat ini dan masukkan hanya hasil yang benar-benar tampil di terminal.
+
+**Hasil terakhir yang diverifikasi pada 28 Oktober 2026:** `npm.cmd test` lulus, 1 test suite dan 7 test. Ini adalah smoke test API, bukan klaim bahwa semua alur database sudah diuji integrasi.
 
 ## 12. Keamanan dan Deployment
 

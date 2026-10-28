@@ -2,6 +2,8 @@
 
 Brief meminta screenshot bukti untuk setiap Todo. Ambil screenshot setelah fitur benar-benar selesai, gunakan folder Drive dengan nama persis seperti di bawah, dan sembunyikan password, JWT, API Key, serta nilai `.env`.
 
+**Pembaruan status per 28 Oktober 2026:** menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive. Source sudah tersedia di repository GitHub dan README tampil di halaman repository. File tautan GitHub sudah disiapkan di proyek, tetapi bukti bahwa file tautan itu sudah diunggah ke folder Drive yang sama belum tersedia; tandai pekerjaan unggah link selesai setelah upload dikonfirmasi.
+
 Pola nama file singkat: `PP_XX-deskripsi.png` untuk Pre-Production, `PS1_XX-deskripsi.png` untuk Production Stage 1, `PS2_XX-deskripsi.png` untuk Production Stage 2, dan `POST_XX-deskripsi.png` untuk Post-Production. Contoh bukti pertama: `PP_01-setup-nodejs-dan-library.png`.
 
 ## Pre-Production
@@ -64,9 +66,9 @@ Folder Drive: `Post-Production`
 | --- | --- |
 | Review `.env` dan `node_modules` | `.gitignore` serta `git status` yang menunjukkan secret/dependensi tidak akan di-commit; jangan tampilkan isi `.env`. |
 | README lengkap | README lokal atau tampilan README di halaman utama GitHub. |
-| Manual Book | PDF Manual Book yang sudah final dan siap diunggah. |
-| Buat repository dan push ke GitHub | Halaman repository berisi source project yang sudah di-push. |
-| Pastikan README tampil di beranda | Halaman utama repository yang menampilkan README dengan benar. |
-| Upload Manual Book dan link GitHub | Folder Drive `Post-Production` berisi PDF dan catatan/link repository. |
+| Manual Book | **Selesai menurut konfirmasi Dafi:** PDF final sudah diunggah ke Drive. |
+| Buat repository dan push ke GitHub | **Selesai:** source tersedia di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api). |
+| Pastikan README tampil di beranda | **Selesai:** README tampil pada halaman utama repository. Simpan screenshot dengan nama `POST_01-readme-github.png`. |
+| Upload tautan GitHub | **Menunggu upload/konfirmasi:** unggah file `GitHub_Link.txt` dari folder proyek ke folder Drive `Post-Production` yang sama dengan PDF Manual Book. File tersebut berisi tautan repository saja. |
 
-Unggah screenshot asli setelah setiap checklist selesai. Jangan menyimpan token, password, API Key, atau secret environment yang terbaca di gambar.
+Screenshot lokal yang sudah disiapkan di folder `Post-Production` proyek: `POST_01-readme-github.png`, `POST_02-postproduction-links.png`, dan `POST_03-manual-book-pdf.png`. Pastikan screenshot yang dibutuhkan benar-benar tersinkron/diunggah ke folder Drive sebelum menyatakan upload bukti selesai. Jangan menyimpan token, password, API Key, atau secret environment yang terbaca di gambar.

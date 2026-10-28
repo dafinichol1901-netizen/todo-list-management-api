@@ -1,6 +1,6 @@
-# Rencana API Todo List Management
+# API Todo List Management: Rancangan dan Status Implementasi
 
-Dokumen ini menjadi peta awal implementasi dari Brief dan checklist Todos. Semua endpoint berada di bawah `/api/v1`.
+Dokumen ini mencatat rancangan dan kondisi implementasi API saat ini. Semua endpoint berada di bawah `/api/v1`. Route, validasi, service, model, dan dokumentasi Swagger sudah tersedia di source project.
 
 ## Model data
 
@@ -15,7 +15,7 @@ Semua dokumen MongoDB memiliki `created_by`, `updated_by`, `created_at`, `update
 
 Penghapusan todo dan kategori menggunakan arsip melalui `archived: true`. Daftar biasa hanya menampilkan dokumen yang belum diarsipkan.
 
-## Endpoint rencana
+## Endpoint yang tersedia
 
 | Method | Endpoint | Akses |
 | --- | --- | --- |
@@ -26,17 +26,17 @@ Penghapusan todo dan kategori menggunakan arsip melalui `archived: true`. Daftar
 | GET | `/auth/me` | JWT. |
 | GET | `/users` | Admin. |
 | GET, PATCH | `/users/:id` | Pemilik akun atau admin; perubahan role khusus admin. |
-| GET, POST | `/categories` | JWT; data dibatasi ke pemilik. |
-| GET, PATCH, DELETE | `/categories/:id` | JWT; data dibatasi ke pemilik. |
-| GET, POST | `/todos` | JWT; data dibatasi ke pemilik. |
-| GET, PATCH, DELETE | `/todos/:id` | JWT; data dibatasi ke pemilik. |
-| GET | `/activity-logs` | JWT; log milik sendiri, admin dapat melihat seluruh log. |
+| GET, POST | `/categories` | JWT; user mengakses kategori sendiri, admin dapat melihat seluruh kategori. |
+| GET, PATCH, DELETE | `/categories/:id` | JWT; akses mengikuti pemilik atau hak admin. |
+| GET, POST | `/todos` | JWT; user mengakses todo sendiri, admin dapat melihat seluruh todo. |
+| GET, PATCH, DELETE | `/todos/:id` | JWT; akses mengikuti pemilik atau hak admin. |
+| GET | `/activity-logs` | JWT; user melihat log sendiri, admin dapat melihat seluruh log. |
 | GET | `/public/stats` | API Key melalui header `x-api-key`. |
 | GET | `/public/activity-logs` | API Key; hanya data aktivitas yang disanitasi. |
 
 ## Query daftar todo
 
-`GET /todos` mendukung `page`, `limit`, `sortBy`, `order`, `search`, `completed`, dan `category`. Server membatasi ukuran halaman dan hanya menerima nama field sorting yang diizinkan.
+`GET /todos` mendukung `page`, `limit`, `sortBy`, `order`, `search`, `completed`, dan `category`. Default halaman adalah 1 dengan 20 item; `limit` maksimum 100. Sorting divalidasi terhadap field `title`, `priority`, `due_date`, `completed`, `created_at`, dan `updated_at`.
 
 ## Bentuk respons
 
@@ -44,7 +44,8 @@ Respons sukses menggunakan `{ "success": true, "data": ... }`. Respons gagal men
 
 ## Keputusan implementasi
 
-- User biasa hanya dapat membuat, membaca, memperbarui, dan mengarsipkan resource miliknya sendiri.
+- User biasa hanya dapat membuat, membaca, memperbarui, dan mengarsipkan resource miliknya sendiri. Akses admin lintas pengguna diterapkan pada endpoint dan service yang mendukungnya.
 - API Key tidak menggantikan JWT dan hanya melindungi endpoint machine-to-machine.
 - Password, token, API Key, dan nilai environment tidak dikembalikan di respons atau activity log.
-- Detail response, batas pagination, dan role admin akan didokumentasikan lagi di Swagger setelah route selesai.
+- Validasi request memakai `express-validator`; model juga menerapkan validasi Mongoose. Respons sukses dan error menggunakan bentuk JSON konsisten.
+- Swagger tersedia pada `/api-docs`; dokumentasi ini mengikuti route dan validator yang ada di source saat diperbarui.

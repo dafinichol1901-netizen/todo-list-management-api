@@ -2,10 +2,12 @@
 
 Proyek mengekspor aplikasi Express dari `src/index.js`, lokasi yang dikenali Vercel untuk aplikasi Express. Fungsi serverless menghubungkan MongoDB saat menerima request yang memerlukan database; endpoint health liveness tetap dapat dipanggil tanpa membuka koneksi database.
 
+**Status deployment:** belum diverifikasi sebagai deployment produksi. Panduan ini menjelaskan langkah yang perlu dilakukan; jangan menganggap API sudah live sebelum URL deployment dan pemeriksaan pascadeploy berhasil.
+
 ## Persiapan
 
 1. Buat database MongoDB Atlas atau siapkan MongoDB yang dapat dijangkau dari Vercel.
-2. Masukkan proyek ke repository GitHub milik Dafi. `.env` dan secret tidak boleh dimasukkan ke repository.
+2. Repository source tersedia di [GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api). `.env` dan secret tidak boleh dimasukkan ke repository.
 3. Import repository tersebut ke Vercel.
 
 Vercel mendeteksi Express dari export aplikasi di `src/index.js`; konfigurasi `vercel.json` khusus tidak diperlukan untuk routing API ini.

@@ -10,7 +10,7 @@ Proyek mengekspor aplikasi Express dari `src/index.js`, lokasi yang dikenali Ver
 - Health check: `GET /api/v1/health` merespons HTTP 200 dan database terhubung.
 - Readiness check: `GET /api/v1/health/ready` merespons HTTP 200.
 - Dokumentasi Swagger: <https://todo-list-management-api-ox7d.vercel.app/api-docs>
-- Deployment berasal dari branch `master` pada commit `7bcbb257fcc3af60c88e08f6e0447bb534278f7c`.
+- Revisi mentor tersedia pada branch `master`, mulai commit `7bcbb257fcc3af60c88e08f6e0447bb534278f7c`; deployment Production juga memuat pembaruan dokumentasi setelah commit tersebut.
 
 Vercel Authentication dinonaktifkan agar API produksi dapat diakses publik. Endpoint aplikasi tetap menerapkan autentikasi JWT, role, dan API Key sesuai kebutuhannya.
 

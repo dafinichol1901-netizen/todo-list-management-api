@@ -63,8 +63,6 @@ Middleware memproses request dalam urutan tertentu. Middleware dapat membaca `re
 
 Autentikasi, validasi, API Key, pencatatan request, dan penanganan error adalah contoh pekerjaan middleware. Nilai seperti URI MongoDB, JWT secret, dan API key dibaca dari environment. `.env` tidak boleh masuk GitHub; `.env.example` hanya berisi nama variabel dan contoh aman.
 
-Catatan proyek yang lebih lengkap tersedia di [TUTORIAL_02_MIDDLEWARE_DAN_ENV.md](TUTORIAL_02_MIDDLEWARE_DAN_ENV.md).
-
 ### Cek pemahaman
 
 1. Apa yang terjadi jika middleware lupa memanggil `next()` dan tidak mengirim response?

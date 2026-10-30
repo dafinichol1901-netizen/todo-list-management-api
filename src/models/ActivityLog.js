@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const createAuditedSchema = require('./auditedSchema');
 
+const todoSnapshotSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, default: '' },
+  completed: { type: Boolean, default: false },
+  priority: { type: String, enum: ['low', 'medium', 'high'] },
+  due_date: { type: Date, default: null },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', default: null },
+}, { _id: false });
+
 const activityLogSchema = createAuditedSchema({
   actor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -28,6 +37,10 @@ const activityLogSchema = createAuditedSchema({
   metadata: {
     type: mongoose.Schema.Types.Mixed,
     default: () => ({}),
+  },
+  snapshot: {
+    type: todoSnapshotSchema,
+    default: null,
   },
 });
 

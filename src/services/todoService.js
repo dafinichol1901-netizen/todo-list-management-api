@@ -65,7 +65,9 @@ async function listTodos(user, query) {
 }
 
 async function createTodo(user, data) {
-  const category = await assertCategoryBelongsToUser(data.category, user._id);
+  const category = data.category
+    ? await assertCategoryBelongsToUser(data.category, user._id)
+    : null;
   const todo = await Todo.create({
     title: data.title,
     description: data.description || '',
@@ -73,7 +75,7 @@ async function createTodo(user, data) {
     priority: data.priority || 'medium',
     due_date: data.due_date || null,
     user: user._id,
-    category: category._id,
+    category: category?._id || null,
     created_by: user._id,
     updated_by: user._id,
   });
@@ -82,6 +84,7 @@ async function createTodo(user, data) {
     actorId: user._id,
     todoId: todo._id,
     action: 'TODO_CREATED',
+    todo,
     changedFields: [
       'title', 
       'description', 
@@ -122,8 +125,12 @@ async function updateTodo(user, id, data) {
   );
 
   if (Object.hasOwn(data, 'category')) {
-    const category = await assertCategoryBelongsToUser(data.category, todo.user);
-    todo.category = category._id;
+    if (data.category) {
+      const category = await assertCategoryBelongsToUser(data.category, todo.user);
+      todo.category = category._id;
+    } else {
+      todo.category = null;
+    }
   }
 
   const changedFields = [];
@@ -148,6 +155,7 @@ async function updateTodo(user, id, data) {
     actorId: user._id,
     todoId: todo._id,
     action: 'TODO_UPDATED',
+    todo,
     changedFields,
   });
 
@@ -172,6 +180,7 @@ async function archiveTodo(user, id) {
     actorId: user._id,
     todoId: todo._id,
     action: 'TODO_ARCHIVED',
+    todo,
     changedFields: ['archived'],
   });
 

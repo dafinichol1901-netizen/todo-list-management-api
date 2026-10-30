@@ -39,8 +39,8 @@ const todoSchema = createAuditedSchema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-    required: true,
     index: true,
+    default: null,
   },
 });
 

@@ -6,7 +6,7 @@ Import `postman/Todo List Management API.postman_collection.json` ke Postman. In
 - `userName`, `userEmail`, `userPassword`: identitas akun uji.
 - `jwt`: token yang otomatis disimpan setelah registrasi atau login.
 - `categoryId` dan `todoId`: ID yang otomatis disimpan setelah create berhasil.
-- `apiKey`: samakan dengan `API_KEY` lokal; jangan ekspor nilai secret ke berkas koleksi publik.
+- `apiKey`: samakan dengan `API_KEY` lokal, atau gunakan key demo publik README saat menguji deployment; jangan ekspor nilai `API_KEY` production ke berkas koleksi publik.
 
 Environment `postman/environments/Todo API - Local.environment.yaml` adalah template dan nilainya kosong. Isi `baseUrl` dan variabel yang diperlukan di Postman, atau gunakan collection variables. Jangan menyimpan secret aktif di file environment yang dibagikan.
 

@@ -9,7 +9,7 @@ REST API untuk mengelola todo dan kategori milik pengguna. Project ini dibangun 
 - CRUD todo dan kategori, termasuk pemeriksaan kepemilikan data.
 - Pagination, pencarian, filter, dan sorting pada daftar todo.
 - Activity log untuk perubahan penting.
-- Endpoint statistik dan activity log eksternal yang dilindungi API key.
+- Endpoint statistik dan activity log eksternal yang dilindungi API key, termasuk key demo publik terbatas untuk endpoint baca.
 - Validasi request dan format error JSON yang konsisten.
 - Dokumentasi interaktif Swagger UI.
 - Automated smoke test dengan Jest dan Supertest.
@@ -65,7 +65,7 @@ Buka file .env dan isi URI MongoDB serta secret yang kuat untuk JWT_SECRET dan A
 node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ~~~
 
-Jangan unggah file .env, token JWT, password, atau API key ke GitHub, Postman collection, maupun screenshot. File .env.example hanya template dan bukan tempat menyimpan secret aktif.
+Jangan unggah file .env, token JWT, password, atau nilai `API_KEY` production ke GitHub, Postman collection, maupun screenshot. `API_KEY_DEMO` yang dicantumkan di bawah memang publik dan hanya boleh digunakan untuk endpoint GET publik.
 
 ## Environment variables
 
@@ -76,7 +76,8 @@ Jangan unggah file .env, token JWT, password, atau API key ke GitHub, Postman co
 | MONGODB_URI | Ya | URI koneksi MongoDB lokal atau Atlas. |
 | JWT_SECRET | Ya | Secret acak minimal 32 karakter untuk token JWT. |
 | JWT_EXPIRES_IN | Tidak | Masa berlaku token; default 15m. |
-| API_KEY | Ya | Secret acak minimal 32 karakter untuk endpoint eksternal. |
+| API_KEY | Ya | Secret acak minimal 32 karakter untuk endpoint eksternal; jangan dipublikasikan. |
+| API_KEY_DEMO | Tidak | Key demo publik terpisah untuk endpoint GET `/public/stats` dan `/public/activity-logs`; tidak memberi akses ke endpoint JWT. |
 | BCRYPT_SALT_ROUNDS | Tidak | Work factor bcrypt antara 10-15; default 12. |
 | CORS_ORIGINS | Tidak | Origin frontend yang diizinkan, dipisahkan koma; default *. Batasi nilainya saat production. |
 | ADMIN_NAME, ADMIN_EMAIL, ADMIN_PASSWORD | Opsional | Diisi di environment lokal saat menjalankan seed:admin. |
@@ -133,6 +134,16 @@ Semua endpoint API menggunakan prefix /api/v1.
 | GET, PATCH | /users/:id | JWT | Melihat atau mengubah profil sesuai hak akses. |
 | GET | /public/stats | API key | Statistik untuk integrasi eksternal. |
 | GET | /public/activity-logs | API key | Activity log untuk integrasi eksternal. |
+
+### API key demo untuk reviewer
+
+Gunakan key publik berikut hanya untuk mencoba endpoint GET statistik dan activity log yang sudah disanitasi:
+
+~~~text
+5d0eb6cafa28120199610dc63986274a1202d144c952b35eefa89178d4d59bae
+~~~
+
+Kirim nilainya sebagai header `x-api-key`. Key demo ini bukan secret dan tidak boleh digunakan sebagai `API_KEY` production. Server membatasi endpoint publik dengan rate limit.
 
 Dokumentasi endpoint dan skema request/response lengkap tersedia di Swagger UI setelah server lokal dijalankan.
 

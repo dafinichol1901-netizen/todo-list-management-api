@@ -8,7 +8,7 @@
 **Versi dokumen:** 1.0  
 **Tanggal:** 28 Oktober 2026
 
-**Status proyek saat pembaruan:** source sudah dipublikasikan di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api), README tampil di halaman repository, dan smoke test terakhir lulus 7 dari 7 test. Deployment Vercel belum diverifikasi. Menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive; file tautan GitHub perlu diunggah terpisah ke folder Drive yang sama.
+**Status proyek saat pembaruan:** source sudah dipublikasikan di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api), README tampil di halaman repository, dan API sudah dideploy ke Vercel. Menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive; file tautan GitHub perlu diunggah terpisah ke folder Drive yang sama.
 
 ---
 
@@ -74,7 +74,7 @@ postman/           # Collection dan environment Postman
 docs/              # Rencana API, panduan, dan bukti screenshot
 ```
 
-Relasi utamanya: satu user memiliki banyak kategori dan todo. Setiap todo merujuk ke satu kategori milik user yang sama. ActivityLog menyimpan aktor, jenis aksi, ID todo, waktu, dan daftar field yang berubah. Dokumen menggunakan audit field `created_by`, `updated_by`, waktu pembuatan/perubahan, serta `archived`.
+Relasi utamanya: satu user memiliki banyak kategori dan todo. Todo boleh tanpa kategori; jika kategori dipilih, kategori itu harus aktif dan dimiliki user yang sama. ActivityLog menyimpan aktor, jenis aksi, ID todo, waktu, daftar field yang berubah, dan snapshot field todo yang aman ketika aksi terjadi. Dokumen menggunakan audit field `created_by`, `updated_by`, waktu pembuatan/perubahan, serta `archived`.
 
 ## 4. Instalasi dan Konfigurasi
 
@@ -94,7 +94,8 @@ Buka `.env` lokal dan isi MongoDB URI serta secret. `.env` berisi kredensial dan
 | `MONGODB_URI` | Ya | Connection string MongoDB. |
 | `JWT_SECRET` | Ya | Secret acak minimal 32 karakter untuk JWT. |
 | `JWT_EXPIRES_IN` | Tidak | Masa berlaku JWT; default `15m`. |
-| `API_KEY` | Ya | Secret acak minimal 32 karakter untuk endpoint publik. |
+| `API_KEY` | Ya | Secret acak minimal 32 karakter untuk endpoint publik; jangan publikasikan nilainya. |
+| `API_KEY_DEMO` | Tidak | Key demo publik terpisah untuk endpoint GET publik; jangan gunakan sebagai `API_KEY` production. |
 | `BCRYPT_SALT_ROUNDS` | Tidak | Biaya hashing, angka 10 sampai 15; default `12`. |
 | `CORS_ORIGINS` | Tidak | Daftar origin frontend dipisah koma; default `*`. |
 | `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Opsional | Dibutuhkan sementara untuk membuat admin. |
@@ -191,7 +192,7 @@ Simpan ID kategori dari response; ID tersebut dibutuhkan saat membuat todo.
 
 ### Membuat todo
 
-Kirim `POST /api/v1/todos`. Kategori harus aktif dan dimiliki user yang sedang login.
+Kirim `POST /api/v1/todos`. Kategori boleh tidak disertakan. Jika kategori disertakan, kategori harus aktif dan dimiliki user yang sedang login.
 
 ```json
 {
@@ -204,7 +205,7 @@ Kirim `POST /api/v1/todos`. Kategori harus aktif dan dimiliki user yang sedang l
 }
 ```
 
-`title` wajib, maksimal 120 karakter. `priority` dapat berupa `low`, `medium`, atau `high`. `due_date` memakai format tanggal ISO 8601. Field `description`, `completed`, `priority`, dan `due_date` bersifat opsional. `category` wajib.
+`title` wajib, maksimal 120 karakter. `priority` dapat berupa `low`, `medium`, atau `high`. `due_date` memakai format tanggal ISO 8601. Field `description`, `completed`, `priority`, `due_date`, dan `category` bersifat opsional. Untuk menghapus kategori dari todo, kirim `"category": null` melalui `PATCH`.
 
 ### Memperbarui dan mengarsipkan
 
@@ -241,15 +242,15 @@ List response memiliki `items` dan metadata `pagination`, misalnya:
 
 ## 9. Activity Log dan API Key
 
-Pembuatan, perubahan, dan pengarsipan todo mencatat aksi `TODO_CREATED`, `TODO_UPDATED`, dan `TODO_ARCHIVED`. `GET /api/v1/activity-logs` menampilkan log sesuai hak akses. Query yang tersedia mencakup pagination dan filter `action`.
+Pembuatan, perubahan, dan pengarsipan todo mencatat aksi `TODO_CREATED`, `TODO_UPDATED`, dan `TODO_ARCHIVED`. Setiap log baru menyimpan snapshot `title`, `description`, `completed`, `priority`, `due_date`, dan ID kategori saat aksi terjadi; snapshot arsip tetap mempertahankan judul setelah todo diarsipkan. Log yang dibuat sebelum perubahan ini tidak memiliki snapshot. `GET /api/v1/activity-logs` menampilkan log sesuai hak akses. Query yang tersedia mencakup pagination dan filter `action`.
 
 Statistik tersedia melalui `GET /api/v1/public/stats`. Log publik tersedia melalui `GET /api/v1/public/activity-logs`; response publik hanya memuat informasi aman seperti action, entity, dan waktu aktivitas. Sertakan header:
 
 ```text
-x-api-key: <API_KEY_DARI_ENV_LOKAL>
+x-api-key: <API_KEY_ATAU_API_KEY_DEMO>
 ```
 
-Endpoint publik membatasi request dan memerlukan API Key yang dikonfigurasi server. API Key yang hilang menghasilkan 401, key salah 403, dan konfigurasi key server yang kosong menghasilkan 503.
+Endpoint publik membatasi request dan menerima `API_KEY` atau `API_KEY_DEMO` yang dikonfigurasi server. API key yang hilang menghasilkan 401, key salah 403, dan konfigurasi key server yang kosong menghasilkan 503. Gunakan hanya key demo publik yang tercantum di README saat melakukan verifikasi eksternal; jangan pernah mempublikasikan `API_KEY` production.
 
 ## 10. Validasi dan Penanganan Error
 

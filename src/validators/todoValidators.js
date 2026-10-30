@@ -26,6 +26,7 @@ const createTodoValidator = [
     .isISO8601()
     .withMessage('due_date harus berupa tanggal ISO 8601.'),
   body('category')
+    .optional({ nullable: true })
     .isMongoId()
     .withMessage('category harus berisi ID kategori yang valid.'),
 ];
@@ -57,7 +58,7 @@ const updateTodoValidator = [
     .isISO8601()
     .withMessage('due_date harus berupa tanggal ISO 8601.'),
   body('category')
-    .optional()
+    .optional({ nullable: true })
     .isMongoId()
     .withMessage('category harus berisi ID kategori yang valid.'),
 ];

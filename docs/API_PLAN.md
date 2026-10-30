@@ -10,8 +10,8 @@ Semua dokumen MongoDB memiliki `created_by`, `updated_by`, `created_at`, `update
 | --- | --- | --- |
 | User | `name`, `email`, `password`, `role` | Password selalu disimpan sebagai hash; registrasi publik hanya membuat role `user`. |
 | Category | `name`, `description`, `color`, `user` | Kategori dimiliki user; nama unik per user selama belum diarsipkan. |
-| Todo | `title`, `description`, `completed`, `priority`, `due_date`, `user`, `category` | Terhubung ke pemilik dan kategori; pemilik biasa hanya mengakses todo miliknya. |
-| ActivityLog | `actor`, `action`, `entity`, `entity_id`, `metadata` | Mencatat pembuatan, perubahan, dan pengarsipan todo tanpa menyimpan password atau secret. |
+| Todo | `title`, `description`, `completed`, `priority`, `due_date`, `user`, `category` | Kategori opsional; jika dipilih harus aktif dan dimiliki user yang sama. Pemilik biasa hanya mengakses todo miliknya. |
+| ActivityLog | `actor`, `action`, `entity`, `entity_id`, `metadata`, `snapshot` | Mencatat field yang berubah dan snapshot field todo yang aman saat aksi dibuat, diubah, atau diarsipkan; tanpa password atau secret. |
 
 Penghapusan todo dan kategori menggunakan arsip melalui `archived: true`. Daftar biasa hanya menampilkan dokumen yang belum diarsipkan.
 
@@ -45,7 +45,8 @@ Respons sukses menggunakan `{ "success": true, "data": ... }`. Respons gagal men
 ## Keputusan implementasi
 
 - User biasa hanya dapat membuat, membaca, memperbarui, dan mengarsipkan resource miliknya sendiri. Akses admin lintas pengguna diterapkan pada endpoint dan service yang mendukungnya.
-- API Key tidak menggantikan JWT dan hanya melindungi endpoint machine-to-machine.
+- API Key tidak menggantikan JWT dan hanya melindungi endpoint machine-to-machine. `API_KEY_DEMO` opsional merupakan key publik terpisah untuk endpoint GET publik yang dibatasi rate limit.
+- Snapshot activity log hanya menyimpan `title`, `description`, `completed`, `priority`, `due_date`, dan ID kategori; data historis sebelum fitur snapshot ditambahkan tidak otomatis memiliki snapshot.
 - Password, token, API Key, dan nilai environment tidak dikembalikan di respons atau activity log.
 - Validasi request memakai `express-validator`; model juga menerapkan validasi Mongoose. Respons sukses dan error menggunakan bentuk JSON konsisten.
 - Swagger tersedia pada `/api-docs`; dokumentasi ini mengikuti route dan validator yang ada di source saat diperbarui.

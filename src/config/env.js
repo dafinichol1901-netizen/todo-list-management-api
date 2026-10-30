@@ -14,6 +14,7 @@ const config = Object.freeze({
   jwtSecret: process.env.JWT_SECRET || '',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '15m',
   apiKey: process.env.API_KEY || '',
+  apiKeyDemo: process.env.API_KEY_DEMO || '',
   bcryptSaltRounds: Number.parseInt(process.env.BCRYPT_SALT_ROUNDS || '12', 10),
   corsOrigins: splitList(process.env.CORS_ORIGINS || '*'),
 });
@@ -31,6 +32,14 @@ function assertRequiredEnvironment() {
 
   if (config.apiKey.length < 32 || config.apiKey.toLowerCase().includes('replace-with')) {
     errors.push('API_KEY harus berupa secret acak dengan minimal 32 karakter.');
+  }
+
+  if (config.apiKeyDemo && (
+    config.apiKeyDemo.length < 32
+    || config.apiKeyDemo.toLowerCase().includes('replace-with')
+    || config.apiKeyDemo === config.apiKey
+  )) {
+    errors.push('API_KEY_DEMO harus berbeda dari API_KEY dan memiliki minimal 32 karakter.');
   }
 
   if (!Number.isInteger(config.port) || config.port < 1 || config.port > 65535) {

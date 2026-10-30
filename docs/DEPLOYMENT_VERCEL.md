@@ -2,7 +2,17 @@
 
 Proyek mengekspor aplikasi Express dari `src/index.js`, lokasi yang dikenali Vercel untuk aplikasi Express. Fungsi serverless menghubungkan MongoDB saat menerima request yang memerlukan database; endpoint health liveness tetap dapat dipanggil tanpa membuka koneksi database.
 
-**Status deployment:** belum diverifikasi sebagai deployment produksi. Panduan ini menjelaskan langkah yang perlu dilakukan; jangan menganggap API sudah live sebelum URL deployment dan pemeriksaan pascadeploy berhasil.
+**Status deployment:** sudah live dan diverifikasi pada 30 Oktober 2026.
+
+## Hasil deployment
+
+- Production API URL: <https://todo-list-management-api-ox7d.vercel.app>
+- Health check: `GET /api/v1/health` merespons HTTP 200 dan database terhubung.
+- Readiness check: `GET /api/v1/health/ready` merespons HTTP 200.
+- Dokumentasi Swagger: <https://todo-list-management-api-ox7d.vercel.app/api-docs>
+- Deployment berasal dari branch `master` pada commit `e6134c591b4e9807295fa31501a58c52d704ce46`.
+
+Vercel Authentication dinonaktifkan agar API produksi dapat diakses publik. Endpoint aplikasi tetap menerapkan autentikasi JWT, role, dan API Key sesuai kebutuhannya.
 
 ## Persiapan
 
@@ -23,10 +33,11 @@ Tambahkan variabel berikut pada pengaturan project Vercel untuk environment yang
 | `JWT_SECRET` | Secret acak minimal 32 karakter. |
 | `JWT_EXPIRES_IN` | Contoh `15m`. |
 | `API_KEY` | Secret acak terpisah, minimal 32 karakter. |
+| `API_KEY_DEMO` | Key publik terpisah untuk menguji endpoint GET `/public/stats` dan `/public/activity-logs`. |
 | `BCRYPT_SALT_ROUNDS` | `12`. |
 | `CORS_ORIGINS` | Origin frontend yang diizinkan; pisahkan beberapa origin dengan koma. |
 
-Jangan menaruh nilai rahasia di source code, repository, screenshot, atau dokumentasi publik. Gunakan akun database dengan hak minimum yang diperlukan dan atur akses jaringan MongoDB sesuai model egress deployment.
+Jangan menaruh nilai rahasia di source code, repository, screenshot, atau dokumentasi publik. `API_KEY_DEMO` adalah pengecualian yang memang dipublikasikan di README dan hanya boleh mengakses endpoint GET publik yang dibatasi rate limit; jangan pernah menyamakan nilainya dengan `API_KEY`. Gunakan akun database dengan hak minimum yang diperlukan dan atur akses jaringan MongoDB sesuai model egress deployment.
 
 ## Pemeriksaan setelah deployment
 
@@ -35,7 +46,7 @@ Jangan menaruh nilai rahasia di source code, repository, screenshot, atau dokume
 3. Buka `https://<domain-vercel>/api-docs` untuk menguji endpoint melalui Swagger UI.
 4. Jalankan registrasi, login, CRUD kategori dan todo, pencarian/pagination, serta endpoint API Key melalui Postman.
 
-Deployment produksi tidak dilakukan dari lingkungan ini. Dafi perlu menghubungkan repository dan mengisi environment variables di akun Vercel sendiri.
+Pemeriksaan pascadeploy di atas telah dilakukan untuk health, koneksi database, dan pemuatan halaman Swagger. Uji fungsional endpoint melalui Postman tetap perlu dilakukan sebelum URL dikirim untuk review.
 
 ## Referensi resmi
 

@@ -101,6 +101,12 @@ Setelah server berjalan, buka:
 - http://localhost:3000/api/v1/health/ready untuk memeriksa kesiapan koneksi database.
 - http://localhost:3000/api-docs untuk membuka Swagger UI.
 
+## Live deployment
+
+- Production API: <https://todo-list-management-api-ox7d.vercel.app>
+- Swagger UI: <https://todo-list-management-api-ox7d.vercel.app/api-docs>
+- Health check: <https://todo-list-management-api-ox7d.vercel.app/api/v1/health>
+
 ## Pengujian dan script tambahan
 
 ~~~powershell

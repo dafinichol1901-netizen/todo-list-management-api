@@ -5,10 +5,10 @@
 **Disusun oleh:** Muhamad Dafi Nanggala  
 **Teknologi:** Node.js, Express.js, MongoDB, Mongoose  
 **Versi API:** 1 (`/api/v1`)  
-**Versi dokumen:** 1.0  
-**Tanggal:** 28 Oktober 2026
+**Versi dokumen:** 1.1  
+**Tanggal:** 30 Oktober 2026
 
-**Status proyek saat pembaruan:** source sudah dipublikasikan di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api), README tampil di halaman repository, dan API sudah dideploy ke Vercel. Menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive; file tautan GitHub perlu diunggah terpisah ke folder Drive yang sama.
+**Status proyek saat pembaruan:** source dan revisi mentor sudah dipublikasikan di [repository GitHub](https://github.com/dafinichol1901-netizen/todo-list-management-api), README tampil di halaman repository, dan API sudah dideploy ke Vercel. Test terakhir lulus 17 dari 17. Menurut konfirmasi Dafi, PDF Manual Book sudah diunggah ke Drive; file tautan GitHub perlu diunggah terpisah ke folder Drive yang sama.
 
 ---
 
